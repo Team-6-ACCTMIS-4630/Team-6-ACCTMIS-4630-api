@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="Team6.Api/Team6.Api.csproj" />
+  <Project Path="Team6.Domain/Team6.Domain.csproj" />
+</Solution>
