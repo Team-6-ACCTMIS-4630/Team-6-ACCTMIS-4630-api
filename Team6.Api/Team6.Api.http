@@ -4,3 +4,15 @@ GET {{Team6.Api_HostAddress}}/weatherforecast/
 Accept: application/json
 
 ###
+GET http://localhost:5251/Catalog/1234
+Accept: application/json
+### Post a new catalog item
+POST http://localhost:5251/Catalog
+Content-Type: application/json
+
+{
+  "name": "Shoes",
+  "description": "Ohio State shoes",
+  "brand": "Nike",
+  "price": 129.99
+}
