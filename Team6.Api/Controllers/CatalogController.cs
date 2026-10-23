@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
+using Team6.Data;
 using Team6.Domain.Catalog;
+using Team6.Data;
 
 namespace Team6.Api.Controllers
 {
@@ -7,29 +9,33 @@ namespace Team6.Api.Controllers
     [Route("[controller]")]
     public class CatalogController : ControllerBase
    {
+        private readonly StoreContext _db;
+
+        public CatalogController(StoreContext db)
+        {
+            _db = db;
+        }
       [HttpGet]
 public IActionResult GetItems()
 {
-    var items = new List<Item>()
-    {
-        new Item("Shirt", "Ohio State shirt.", "Nike", 29.99m),
-        new Item("Shorts", "Ohio State shorts.", "Nike", 44.99m)
-    };
-
-     return Ok(items);
+     return Ok(_db.Items);
 }
  [HttpGet("{id:int}")]
     public IActionResult GetItem(int id)
     {
-        var item = new Item("Shirt", "Ohio State shirt.", "Nike", 29.99m);
-        item.Id = id;
-
-        return Ok(item);
+        var item = _db.Items.Find(id);
+        if (item == null)
+            {
+                return NotFound();
+            }
+        return Ok();
     }
         [HttpPost]
 public IActionResult Post(Item item)
 {
-    return Created("/catalog/42", item);
+    _db.Items.Add(item);
+    _db.SaveChanges();
+    return Created($"/catalog/{item.Id}", item);
 }
     [HttpPost("{id:int}/ratings")]
 public IActionResult PostRating(int id, [FromBody] Rating rating)
