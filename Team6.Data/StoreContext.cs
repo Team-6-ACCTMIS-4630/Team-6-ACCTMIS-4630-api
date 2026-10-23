@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Internal;
 using Team6.Data;
+using Team6.Domain.Orders;
 
 namespace Team6.Data
 {
@@ -13,6 +14,7 @@ namespace Team6.Data
         }
 
         public DbSet<Item> Items { get; set; }
+        public DbSet<Order> Orders{get; set;}
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

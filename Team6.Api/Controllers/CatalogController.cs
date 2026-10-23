@@ -2,6 +2,8 @@ using Microsoft.AspNetCore.Mvc;
 using Team6.Data;
 using Team6.Domain.Catalog;
 using Team6.Data;
+using Microsoft.EntityFrameworkCore;
+using System.Reflection.Metadata.Ecma335;
 
 namespace Team6.Api.Controllers
 {
@@ -47,16 +49,36 @@ public IActionResult PostRating(int id, [FromBody] Rating rating)
     return Ok(item);
   }
  [HttpPut("{id:int}")]
-public IActionResult Put(int id, Item item)
+public IActionResult PutItem(int id, [FromBody] Item item)
 {
-    return NoContent();
-
-
+  if (id != item.Id)
+    {
+        return BadRequest();
     }
-  [HttpDelete("{id:int}")]
-public IActionResult Delete(int id)
-{
+    
+    if(_db.Items.Find(id) == null)
+            {
+                return NotFound();
+            }
+
+    _db.Entry(item).State = EntityState.Modified;
+    _db.SaveChanges();
+    
     return NoContent();
+}
+  [HttpDelete("{id:int}")]
+public IActionResult DeleteItem(int id)
+{
+    var item = _db.Items.Find(id);
+    if(item == null)
+            {
+                return NotFound();
+            }
+
+    _db.Items.Remove(item);
+    _db.SaveChanges();
+
+    return Ok(); 
 }
 }
 }
