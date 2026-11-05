@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/tests/">
+    <Project Path="tests/Team6.Domain.Tests/Team6.Domain.Tests.csproj" />
+  </Folder>
   <Project Path="Team6.Api/Team6.Api.csproj" />
   <Project Path="Team6.Data/Team6.Data.csproj" />
   <Project Path="Team6.Domain/Team6.Domain.csproj" />
