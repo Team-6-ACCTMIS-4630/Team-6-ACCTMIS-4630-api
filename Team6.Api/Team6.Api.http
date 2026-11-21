@@ -16,3 +16,6 @@ Content-Type: application/json
   "brand": "Nike",
   "price": 129.99
 }
+### Test authorized catalog deletion
+DELETE http://localhost:5251/catalog/99999
+Authorization: Bearer {{accessToken}}

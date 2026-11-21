@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Team6.Data;
 using Team6.Domain.Catalog;
@@ -66,7 +67,8 @@ public IActionResult PutItem(int id, [FromBody] Item item)
     
     return NoContent();
 }
-  [HttpDelete("{id:int}")]
+  [Authorize("delete:catalog")]
+[HttpDelete("{id:int}")]
 public IActionResult DeleteItem(int id)
 {
     var item = _db.Items.Find(id);
