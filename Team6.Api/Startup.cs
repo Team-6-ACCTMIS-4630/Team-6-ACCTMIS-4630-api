@@ -19,9 +19,22 @@ namespace Team6.Api
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddControllers();
-            services.AddEndpointsApiExplorer();
-            services.AddSwaggerGen();
+           
+           services.AddControllers();
+
+// Allow the React frontend to communicate with this API.
+services.AddCors(options =>
+{
+    options.AddDefaultPolicy(policy =>
+    {
+        policy.WithOrigins("http://localhost:3000")
+              .AllowAnyHeader()
+              .AllowAnyMethod();
+    });
+});
+
+services.AddEndpointsApiExplorer();
+services.AddSwaggerGen();
             services.AddDbContext<StoreContext>(options =>
                 options.UseSqlite("Data Source=../Registrar.sqlite", 
                 b => b.MigrationsAssembly("Team6.Api")));
@@ -36,11 +49,14 @@ namespace Team6.Api
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "jet.piranha.Api v1"));
             }
 
-            app.UseHttpsRedirection();
+           app.UseHttpsRedirection();
 
-            app.UseRouting();
+app.UseRouting();
 
-            app.UseAuthorization();
+// Apply the CORS policy to requests from the React frontend.
+app.UseCors();
+
+app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
