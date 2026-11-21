@@ -483,3 +483,9 @@ $RECYCLE.BIN/
 
 # exclude database files
 *.sqlite 
+
+# Private REST Client credentials
+http-client.private.env.json
+
+# Private REST Client credentials
+http-client.private.env.json
